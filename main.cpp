@@ -3,6 +3,7 @@
 #include <tgbot/net/CurlHttpClient.h>
 #include <tgbot/tgbot.h>
 
+#include <spdlog/logger.h>
 #include <spdlog/sinks/daily_file_sink.h>
 
 #include <iostream>

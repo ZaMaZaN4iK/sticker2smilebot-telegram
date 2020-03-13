@@ -1,0 +1,26 @@
+FROM fedora:latest
+
+LABEL maintainer="Alexander Zaitsev <zamazan4ik@tut.by>"
+
+ARG STICKER2SMILEBOT_SOURCE_URL=https://github.com/ZaMaZaN4iK/sticker2smilebot-telegram.git
+
+RUN dnf install -y perl autoconf automake libtool clang cmake make git python3-pip \
+    && pip install conan
+
+WORKDIR /usr/src/sticker2smilebot-telegram
+
+RUN git clone ${STICKER2SMILEBOT_SOURCE_URL}
+
+WORKDIR sticker2smilebot-telegram
+
+RUN mkdir build
+
+WORKDIR build
+
+RUN CC=clang CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release && \
+    make && \
+    make install && \
+    rm -rf /usr/src/sticker2smilebot-telegram
+
+ENTRYPOINT ["/usr/local/bin/sticker2smilebot_telegram"]
+
