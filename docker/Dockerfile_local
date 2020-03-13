@@ -9,10 +9,11 @@ WORKDIR /usr/src/sticker2smilebot-telegram
 COPY main.cpp ./
 COPY CMakeLists.txt ./
 
-RUN CC=clang CXX=clang++ cmake . -DCMAKE_BUILD_TYPE=Release && \
-    make -j$(nproc) && \
-    make install && \
+RUN CC=clang CXX=clang++ cmake -B build -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build build --target install && \
     rm -rf /usr/src/sticker2smilebot-telegram
+
+WORKDIR /usr/local/bin
 
 ENTRYPOINT ["/usr/local/bin/sticker2smilebot_telegram"]
 

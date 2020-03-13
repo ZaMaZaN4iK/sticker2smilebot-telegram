@@ -15,14 +15,11 @@ RUN wget ${STICKER2SMILEBOT_SOURCE_URL} && unzip v${STICKER2SMILEBOT_VERSION}.zi
 
 WORKDIR sticker2smilebot-telegram-${STICKER2SMILEBOT_VERSION}
 
-RUN mkdir build
-
-WORKDIR build
-
-RUN CC=clang CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release && \
-    make && \
-    make install && \
+RUN CC=clang CXX=clang++ cmake -B build -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build build --target install && \
     rm -rf /usr/src/sticker2smilebot-telegram
+
+WORKDIR /usr/local/bin
 
 ENTRYPOINT ["/usr/local/bin/sticker2smilebot_telegram"]
 

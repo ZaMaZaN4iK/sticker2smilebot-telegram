@@ -3,15 +3,13 @@ Automatically replaces stickers to simple smiles.
 
 ### Dependencies
 * C++ compiler with C++17 support
-* CMake + make/ninja/whatever else
+* CMake
 * Conan
 
 ### How to build
 * Clone this repository
-* `mkdir build && cd build`
-* `cmake ..`
-* `make` (if you use make)
-* `make install` (optional step) 
+* `cmake -B build`
+* `cmake --build build --target install`
 
 ### How to run
 You must provide Telegram Bot API token to the `sticker2smilebot-telegram` with `--token` option. `sticker2smilebot-telegram` has other command line options but only `--token` is mandatory - other options have some reasonable defaults.
