@@ -2,11 +2,11 @@ FROM fedora:latest
 
 LABEL maintainer="Alexander Zaitsev <zamazan4ik@tut.by>"
 
-ARG STICKER2SMILEBOT_VERSION=1.0.1
+ARG STICKER2SMILEBOT_VERSION=1.0.2
 
 ARG STICKER2SMILEBOT_SOURCE_URL=https://github.com/ZaMaZaN4iK/sticker2smilebot-telegram/archive/v${STICKER2SMILEBOT_VERSION}.zip
 
-RUN dnf install -y perl autoconf automake libtool wget unzip clang cmake make python3-pip \
+RUN dnf install -y ca-certificates perl autoconf automake libtool wget unzip clang cmake make python3-pip \
     && pip install conan
 
 WORKDIR /usr/src/sticker2smilebot-telegram

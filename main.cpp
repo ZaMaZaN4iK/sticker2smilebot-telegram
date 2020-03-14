@@ -7,6 +7,7 @@
 #include <spdlog/sinks/daily_file_sink.h>
 
 #include <iostream>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -20,12 +21,20 @@ int main(int argc, char* argv[])
     std::string LogsPath = "logs/log.txt";
     app.add_option("--log-path", LogsPath, "Path to log folder");
 
+    std::optional<std::string> CertificatePath;
+    app.add_option("--ca-info", CertificatePath, "Path to a certificate");
+
     CLI11_PARSE(app, argc, argv);
+
+    TgBot::CurlHttpClient httpClient;
+    // Curl configuration
+    if(CertificatePath.has_value())
+    {
+        curl_easy_setopt(httpClient.curlSettings, CURLOPT_CAINFO, CertificatePath.value().c_str());
+    }
 
     auto daily_logger = spdlog::daily_logger_mt("daily_logger", LogsPath, 0, 0);
     daily_logger->flush_on(spdlog::level::info);
-
-    TgBot::CurlHttpClient httpClient;
 
     TgBot::Bot bot(token, httpClient);
     bot.getEvents().onAnyMessage([&bot, daily_logger](TgBot::Message::Ptr message)
